@@ -1,7 +1,9 @@
+import { API_KEY } from "../API_KEY";
+
 export function fetchCustomNews(source, relevance) {
   return function(dispatch) {
     fetch(
-      `https://newsapi.org/v1/articles?source=${source}&sortBy${relevance}+&apiKey=d2bd4483ceb44f01ae177734f4228c4e`
+      `https://newsapi.org/v1/articles?source=${source}&sortBy${relevance}+&apiKey=${API_KEY}`
     )
       .then(res => {
         return res.json();
