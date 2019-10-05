@@ -1,12 +1,34 @@
 import React from "react";
 import "./App.css";
-import { Provider } from "react-redux";
-import store from "./store/store";
+import { Link } from "react-router-dom";
+import image from "./836 [Converted].svg";
+import Routes from "./routes";
 
 function App() {
   return (
     <div className="App">
-      <Provider store={store}></Provider>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">ReactReduxHooks</Link>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <Link to="/">Search</Link>
+          </li>
+          <li>
+            <Link to="/tech">Tech</Link>
+          </li>
+        </ul>
+      </nav>
+      <header>
+        <h1>React Redux Hooks</h1>
+        <img src={image}></img>
+      </header>
+      <main>
+        <Routes />
+      </main>
     </div>
   );
 }
