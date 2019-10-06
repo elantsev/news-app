@@ -6,21 +6,17 @@ const Main = () => {
   const [sources, setSources] = useState([]);
   const [source, setSource] = useState("");
   const [relevance, setRelevance] = useState("");
-  const customNewsSelector = useSelector(state => state.customSearch);
+  const customNews = useSelector(state => state.customSearch.customNews);
   const dispatch = useDispatch();
-  const getCustomNews = (source, relevance) =>
-    dispatch(fetchCustomNews(source, relevance));
 
-  const getSources = () => {
-    fetch("https://newsapi.org/v1/sources?")
-      .then(res => {
-        console.log(customNewsSelector.customNews);
-        return res.json();
-      })
-      .then(response => {
-        console.log(response);
-        setSources(response.sources);
-      });
+  const getSources = async () => {
+    try {
+      let response = await fetch("https://newsapi.org/v1/sources?");
+      response = await response.json();
+      setSources(response.sources);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -28,67 +24,55 @@ const Main = () => {
   }, []);
 
   const getNews = e => {
-    console.log(source);
     e.preventDefault();
-    if (source === "" || source === "nothing") {
-      console.log("no source selected");
-    } else {
-      getCustomNews(source, relevance);
+    if (source) {
+      dispatch(fetchCustomNews(source, relevance));
     }
   };
 
-  let news;
-  if (
-    customNewsSelector.customNews &&
-    customNewsSelector.customNews.length > 0
-  ) {
-    news = (
+  let news =
+    customNews && customNews.length > 0 ? (
       <div className="news">
-        {customNewsSelector.customNews.map(x => {
-          return (
-            <div className="post" key={x.title}>
-              <img src={x.urlToImage} alt={x.title} />
-              <h2>{x.title}</h2>
-              <p>{x.description}</p>
-            </div>
-          );
-        })}
+        {customNews.map(({ title, urlToImage, description }) => (
+          <div className="post" key={title}>
+            <img src={urlToImage} alt={title} />
+            <h2>{title}</h2>
+            <p>{description}</p>
+          </div>
+        ))}
       </div>
+    ) : (
+      <p>Select a source and relevance from the form</p>
     );
-  } else {
-    news = <p>Select a source and relevance from the form</p>;
-  }
 
   return (
-    <React.Fragment>
-      <section>
-        <h2>Custom Search</h2>
+    <section>
+      <h2>Custom Search</h2>
 
-        <form onSubmit={getNews}>
-          <div className="form-control">
-            <label>Source</label>
-            <select onChange={e => setSource(e.target.value)}>
-              <option value="nothing">Select an option...</option>
-              {sources.map(source => {
-                return (
-                  <option key={source.id} value={source.id}>
-                    {source.name}
-                  </option>
-                );
-              })}
-            </select>
-            <label>Relevance</label>
-            <select onChange={e => setRelevance(e.target.value)}>
-              <option value="latest">Latest</option>
-              <option value="top">Top</option>
-            </select>
-            <input type="submit" value="Search" />
-          </div>
-        </form>
+      <form onSubmit={getNews}>
+        <div className="form-control">
+          <label>Source</label>
+          <select onChange={e => setSource(e.target.value)}>
+            <option value="nothing">Select an option...</option>
+            {sources.map(source => {
+              return (
+                <option key={source.id} value={source.id}>
+                  {source.name}
+                </option>
+              );
+            })}
+          </select>
+          <label>Relevance</label>
+          <select onChange={e => setRelevance(e.target.value)}>
+            <option value="latest">Latest</option>
+            <option value="top">Top</option>
+          </select>
+          <input type="submit" value="Search" />
+        </div>
+      </form>
 
-        {news}
-      </section>
-    </React.Fragment>
+      {news}
+    </section>
   );
 };
 

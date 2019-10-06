@@ -1,11 +1,13 @@
-export const customSearch = (
-  state = {
-    customNews: []
-  },
-  action
-) => {
-  if (action.type === "FETCH_CUSTOM_NEWS") {
-    state = { ...state, customNews: action.payload };
+const initialState = {
+  customNews: []
+};
+
+export const customSearch = (state = initialState, action) => {
+  switch (action.type) {
+    case "FETCH_CUSTOM_NEWS":
+      return { ...state, customNews: action.payload };
+
+    default:
+      return state;
   }
-  return state;
 };

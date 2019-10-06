@@ -3,32 +3,25 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchTech } from "../actions/fetch_tech";
 
 const Tech = () => {
-  //----- redux and dispatch the action
-  const techSelector = useSelector(state => state.fetchTech);
+  const techNews = useSelector(state => state.fetchTech.techNews);
   const dispatch = useDispatch();
-  const getTechNews = () => dispatch(fetchTech());
-
   useEffect(() => {
-    getTechNews();
-  }, []);
+    dispatch(fetchTech());
+  }, [dispatch]);
 
   return (
-    <React.Fragment>
-      <section>
-        <h2>Technology News</h2>
-        <div className="news">
-          {techSelector.techNews.map(x => {
-            return (
-              <div className="post" key={x.title}>
-                <img src={x.urlToImage} />
-                <h2>{x.title}</h2>
-                <p>{x.description}</p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-    </React.Fragment>
+    <section>
+      <h2>Technology News</h2>
+      <div className="news">
+        {techNews.map(({ title, urlToImage, description }) => (
+          <div className="post" key={title}>
+            <img src={urlToImage} alt="" />
+            <h2>{title}</h2>
+            <p>{description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 };
 

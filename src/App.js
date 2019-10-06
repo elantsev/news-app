@@ -24,7 +24,7 @@ function App() {
       </nav>
       <header>
         <h1>React Redux Hooks</h1>
-        <img src={image}></img>
+        <img src={image} alt=""></img>
       </header>
       <main>
         <Routes />
