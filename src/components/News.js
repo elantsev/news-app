@@ -8,8 +8,8 @@ export const News = ({ news }) => (
         <h2>
           <a href={url}>{title}</a>
         </h2>
-        {publishedAt && <p>{`published: ${publishedAt.slice(0, 10)}`}</p>}
         <p>{description}</p>
+        {publishedAt && <p>{`published: ${publishedAt.slice(0, 10)}`}</p>}
       </div>
     ))}
   </div>
