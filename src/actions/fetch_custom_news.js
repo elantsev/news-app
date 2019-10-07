@@ -3,6 +3,7 @@ import { API_KEY } from "../API_KEY";
 export function fetchCustomNews(source, relevance) {
   return async function(dispatch) {
     try {
+      dispatch({ type: "FETCH_CUSTOM_NEWS_IS_LOADING" });
       let response = await fetch(
         `https://newsapi.org/v1/articles?source=${source}&sortBy${relevance}+&apiKey=${API_KEY}`
       );

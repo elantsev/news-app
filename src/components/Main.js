@@ -8,8 +8,9 @@ const Main = () => {
   const [sources, setSources] = useState([]);
   const [source, setSource] = useState("");
   const [relevance, setRelevance] = useState("");
-  const customNews = useSelector(state => state.customSearch.customNews);
+  const customSearch = useSelector(state => state.customSearch);
   const dispatch = useDispatch();
+  const { customNews, isLoading } = customSearch;
 
   const getSources = async () => {
     try {
@@ -35,7 +36,6 @@ const Main = () => {
   return (
     <section>
       <h2>Custom Search</h2>
-
       <form onSubmit={getNews}>
         <div className="form-control">
           <label>Source</label>
@@ -54,13 +54,12 @@ const Main = () => {
             <option value="latest">Latest</option>
             <option value="top">Top</option>
           </select>
-          <input type="submit" value="Search" />
+          <input type="submit" value="Search" disabled={isLoading} />
         </div>
       </form>
-
-      {customNews && customNews.length > 0 ? (
-        <News news={customNews} />
-      ) : (
+      {isLoading && "Loading..."}
+      {customNews.length > 0 && <News news={customNews} />}
+      {customNews.length === 0 && !isLoading && (
         <p>Select a source and relevance from the form</p>
       )}
     </section>
