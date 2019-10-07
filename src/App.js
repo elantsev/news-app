@@ -10,7 +10,7 @@ function App() {
       <nav>
         <ul>
           <li>
-            <Link to="/">ReactReduxHooks</Link>
+            <Link to="/">World News Sites</Link>
           </li>
         </ul>
         <ul>
@@ -23,7 +23,7 @@ function App() {
         </ul>
       </nav>
       <header>
-        <h1>React Redux Hooks</h1>
+        <h1>World News Sites</h1>
         <img src={image} alt=""></img>
       </header>
       <main>

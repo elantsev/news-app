@@ -40,7 +40,7 @@ const Main = () => {
         <div className="form-control">
           <label>Source</label>
           <select onChange={e => setSource(e.target.value)}>
-            <option value="nothing">Select an option...</option>
+            <option value="nothing">Select a site...</option>
             {sources.map(source => {
               return (
                 <option key={source.id} value={source.id}>
