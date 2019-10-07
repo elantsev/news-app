@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCustomNews } from "../actions/fetch_custom_news";
+import { News } from "./News";
+// import { News } from "./News";
 
 const Main = () => {
   const [sources, setSources] = useState([]);
@@ -30,21 +32,6 @@ const Main = () => {
     }
   };
 
-  let news =
-    customNews && customNews.length > 0 ? (
-      <div className="news">
-        {customNews.map(({ title, urlToImage, description }) => (
-          <div className="post" key={title}>
-            <img src={urlToImage} alt={title} />
-            <h2>{title}</h2>
-            <p>{description}</p>
-          </div>
-        ))}
-      </div>
-    ) : (
-      <p>Select a source and relevance from the form</p>
-    );
-
   return (
     <section>
       <h2>Custom Search</h2>
@@ -71,7 +58,11 @@ const Main = () => {
         </div>
       </form>
 
-      {news}
+      {customNews && customNews.length > 0 ? (
+        <News news={customNews} />
+      ) : (
+        <p>Select a source and relevance from the form</p>
+      )}
     </section>
   );
 };
